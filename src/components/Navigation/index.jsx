@@ -21,9 +21,10 @@ const navItems = [
 export function Navigation() {
     const { isOpen: isMobileNavOpen, onToggle } = useDisclosure()
     const { colorMode, toggleColorMode } = useColorMode()
+    const backgroundMain = useColorModeValue('white', 'gray.800')
     
     return (
-        <Box position={'fixed'} top='0' left='0'  w='100%' zIndex='1' bg={useColorModeValue('white', 'gray.800')}>
+        <Box position={'fixed'} top='0' left='0'  w='100%' zIndex='1' bg={backgroundMain}>
             <Flex  py='10px' px='20px' align={'center'} justify={'space-between'}  borderBottom={1} borderStyle={'solid'} borderColor={useColorModeValue('gray.200', 'gray.900')}>
                 <HStack spacing='40px'>
                     <Logo/>

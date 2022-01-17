@@ -4,7 +4,7 @@ export function MobileNav({navItems}) {
     return (
         <VStack align={'start'} p={5} display={{base: 'flex', md: 'none' }} bg={useColorModeValue('white', 'gray.800')} >
             {navItems.map(item => (
-                <Link fontSize='xs' fontWeight={900}>{item.label}</Link>
+                <Link fontSize='xs' fontWeight={700}>{item.label}</Link>
             ))
             }
             <RegisterButtons/>
