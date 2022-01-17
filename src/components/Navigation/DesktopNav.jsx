@@ -5,7 +5,7 @@ export  function DesktopNav({navItems}) {
         <Box as={'nav'}  display={{ base: 'none', md: 'block' }}>
             <HStack>
                 {navItems.map(item => (
-                  <Link fontSize={'sm'} fontWeight={600}>{item.label}</Link>
+                  <Link fontSize={'xs'} fontWeight={700}>{item.label}</Link>
                 ))
                 }
             </HStack>
