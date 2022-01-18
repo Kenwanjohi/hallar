@@ -36,7 +36,7 @@ const settings = {
       ]
 };
 
-export function CategorySection(props) {
+export function CategorySection({data,...props}) {
     const [slider, setSlider] = useState(null);
     return (
         <Box as={'section'} position={'relative'}>
@@ -62,15 +62,9 @@ export function CategorySection(props) {
                 <ArrowRightCircle />
             </IconButton>
             <Slider {...settings} ref={(slider) => setSlider(slider)}>
-                <PosterCard/>
-                <PosterCard/>
-                <PosterCard/>
-                <PosterCard/>
-                <PosterCard/>
-                <PosterCard/>
-                <PosterCard/>
-                <PosterCard/>
-                <PosterCard/>
+              {
+                data && data.map(item => (<PosterCard details={item} />))
+              }
             </Slider>
         </Box>
     )
