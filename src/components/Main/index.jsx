@@ -1,6 +1,9 @@
 import { Box, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import { CategorySection } from './CategorySection'
+
+
 export  function Main() {
+
     return (
       <Box as={'main'}>
           <Tabs>
