@@ -12,14 +12,14 @@ export function PosterCard({details, ...props}) {
         }
         return str.slice(0, num) + '...'
     }
-    const { poster_path, release_date, title, overview, vote_average} = details ?? {}
+    const { poster_path, name, release_date, first_air_date, title, overview, vote_average} = details ?? {}
     return (
         <Stack spacing={4} mr='20px' >
             <Box color='white' w='290px' h='420px' position={'relative'} onMouseOver={handleShow} onMouseLeave={hideShow}>
                 <Image src={`https://image.tmdb.org/t/p/w500${poster_path}`} alt='Movie poster' h='100%' />
                 <Stack p={2} position={'absolute'} top='0' left='0' w='100%' h='100%' justify={'end'} bgGradient='linear(to-b, transparent,40%, rgba(8, 8, 8, 0.5),60%, rgba(8, 8, 8))'>
-                    <h1 style={{fontSize:'20px', fontWeight: '700'}} >{title}</h1>
-                    <Text>{vote_average} Tmdb • ({release_date.substring(0, 4)})</Text>
+                    <h1 style={{fontSize:'20px', fontWeight: '700'}} >{title || name}</h1>
+                    <Text>{vote_average} Tmdb • ({(release_date || first_air_date).substring(0, 4)})</Text>
                     <Collapse startingHeight={0} in={show} >
                         <Text>{truncateString(overview, 105)}</Text>
                     </Collapse>
@@ -29,8 +29,8 @@ export function PosterCard({details, ...props}) {
                 </Stack>
             </Box>
             <Box >
-            <h1 style={{fontSize:'20px', fontWeight: '700'}} >{truncateString(title)}</h1>
-            <Text>{vote_average} Tmdb • Movie ({release_date.substring(0, 4)})</Text>
+            <h1 style={{fontSize:'20px', fontWeight: '700'}} >{truncateString(title||name)}</h1>
+            <Text>{vote_average} Tmdb • ({(release_date || first_air_date).substring(0, 4)})</Text>
             </Box>
         </Stack>
     )
