@@ -63,7 +63,7 @@ export function CategorySection({data,...props}) {
             </IconButton>
             <Slider {...settings} ref={(slider) => setSlider(slider)}>
               {
-                data && data.map(item => (<PosterCard details={item} />))
+                data && data.map((item,i)  => (<PosterCard  key={i} details={item} />))
               }
             </Slider>
         </Box>
