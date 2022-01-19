@@ -17,6 +17,10 @@ async function fetchMovies(category, type='movie') {
   let response = await axios.get(`${BASE_URL}${type}/${endPoints[`${category}`]}?api_key=${apikey}&language=en-US`)
   return response.data.results
 }
+async function fetchTrends() {
+  let response = await axios.get(`${BASE_URL}trending/person/week?api_key=${apikey}`)
+  return response.data
+}
 export  function Main() {
   const { data: popularData, isLoading: popularLoading, isError: popularError } = useQuery('popular', () => fetchMovies('popular'))
   const { data: nowPlayingData, isLoading: nowPlayingLoading, isError: nowPlayingError } = useQuery('nowplaying', () => fetchMovies('nowplaying'))
@@ -26,7 +30,8 @@ export  function Main() {
   const { data: nowPlayingTvData, isLoading: nowPlayingTvLoading, isError: nowPlayingTvError} = useQuery('ontheair', () => fetchMovies('ontheair', 'tv'))
   const { data: comingSoonTvData, isLoading: comingSoonTvLoading, isError:  comingSoonTvError} = useQuery('airingtoday', () => fetchMovies('airingtoday', 'tv'))
   const { data: topRatedTvData, isLoading: topRatedTvLoading, isError: topRatedTvError} = useQuery('topratedtv', () => fetchMovies('toprated', 'tv'))
-
+  const { data, isLoading, isError} = useQuery('trends', () => fetchTrends())
+  console.log(data)
     return (
       <Box as={'main'}>
           <Tabs>
