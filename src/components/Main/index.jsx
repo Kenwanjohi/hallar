@@ -4,13 +4,14 @@ import { Box, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import { CategorySection } from './CategorySection'
 
 const BASE_URL = 'https://api.themoviedb.org/3/'
-const apikey = `6d52450de693cb39e47fd26bd1c349da`;
+const apikey = import.meta.env.VITE_API_KEY;
 const endPoints = {
     "popular" : "popular",
     "nowplaying": "now_playing",
     "comingsoon": "upcoming",
     "toprated": "top_rated",
-    "airingtoday": "airing_today"
+    "airingtoday": "airing_today",
+    "ontheair": "on_the_air"
 }
 async function fetchMovies(category, type='movie') {
   let response = await axios.get(`${BASE_URL}${type}/${endPoints[`${category}`]}?api_key=${apikey}&language=en-US`)
@@ -21,11 +22,10 @@ export  function Main() {
   const { data: nowPlayingData, isLoading: nowPlayingLoading, isError: nowPlayingError } = useQuery('nowplaying', () => fetchMovies('nowplaying'))
   const { data: comingSoonData, isLoading: comingSoonLoading, isError: comingSoonError } = useQuery('comingsoon', () => fetchMovies('comingsoon'))
   const { data: topRatedData, isLoading: topRatedLoading, isError: topRatedError} = useQuery('toprated', () => fetchMovies('toprated'))
-  const { data, isLoading, isError} = useQuery('airingtoday', () => fetchMovies('airingtoday', 'tv'))
-  console.log(data)
-
-
-
+  const { data: popularTvData, isLoading: popularTvLoading, isError: popularTvError} = useQuery('populartv', () => fetchMovies('popular', 'tv'))
+  const { data: nowPlayingTvData, isLoading: nowPlayingTvLoading, isError: nowPlayingTvError} = useQuery('ontheair', () => fetchMovies('ontheair', 'tv'))
+  const { data: comingSoonTvData, isLoading: comingSoonTvLoading, isError:  comingSoonTvError} = useQuery('airingtoday', () => fetchMovies('airingtoday', 'tv'))
+  const { data: topRatedTvData, isLoading: topRatedTvLoading, isError: topRatedTvError} = useQuery('topratedtv', () => fetchMovies('toprated', 'tv'))
 
     return (
       <Box as={'main'}>
@@ -42,23 +42,12 @@ export  function Main() {
                 <CategorySection data={nowPlayingData}/>
                 <CategorySection data={comingSoonData}/>
                 <CategorySection data={topRatedData}/>
-                {/* <Box as={'section'}>Popular</Box>
-                <Box as={'section'}>Upcoming</Box>
-                <Box as={'section'}>Now playing</Box>
-                <Box as={'section'}>Latest</Box>
-                <Box as={'section'}>Top rated</Box> */}
               </TabPanel>
               <TabPanel>
-                <CategorySection data={data}/>
-                <CategorySection/>
-                <CategorySection/>
-                <CategorySection/>
-                <CategorySection/>
-                {/* <Box as={'section'}>Popular</Box>
-                <Box as={'section'}>Upcoming</Box>
-                <Box as={'section'}>Now playing</Box>
-                <Box as={'section'}>Latest</Box>
-                <Box as={'section'}>Top rated</Box> */}
+                <CategorySection data={popularTvData}/>
+                <CategorySection data={nowPlayingTvData}/>
+                <CategorySection data={comingSoonTvData}/>
+                <CategorySection data={topRatedTvData}/>
               </TabPanel>
               <TabPanel>
                 <Box as={'section'}>All</Box>
