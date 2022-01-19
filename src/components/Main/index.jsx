@@ -49,7 +49,7 @@ export  function Main() {
                 <Box as={'section'}>Top rated</Box> */}
               </TabPanel>
               <TabPanel>
-                <CategorySection/>
+                <CategorySection data={data}/>
                 <CategorySection/>
                 <CategorySection/>
                 <CategorySection/>
