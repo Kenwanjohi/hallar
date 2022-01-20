@@ -1,67 +1,73 @@
 import axios from 'axios';
-import { useQuery } from 'react-query'
-import { Box, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
-import { CategorySection } from './CategorySection'
+import { useQuery } from 'react-query';
+import { Box, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
+import { CategorySection } from './CategorySection';
 
-const BASE_URL = 'https://api.themoviedb.org/3/'
+const BASE_URL = 'https://api.themoviedb.org/3/';
 const apikey = import.meta.env.VITE_API_KEY;
 const endPoints = {
-    "popular" : "popular",
-    "nowplaying": "now_playing",
-    "comingsoon": "upcoming",
-    "toprated": "top_rated",
-    "airingtoday": "airing_today",
-    "ontheair": "on_the_air"
+  popular: 'popular',
+  nowplaying: 'now_playing',
+  comingsoon: 'upcoming',
+  toprated: 'top_rated',
+  airingtoday: 'airing_today',
+  ontheair: 'on_the_air'
+};
+async function fetchMovies(category, type = 'movie') {
+  let response = await axios.get(
+    `${BASE_URL}${type}/${endPoints[`${category}`]}?api_key=${apikey}&language=en-US`
+  );
+  return response.data.results;
 }
-async function fetchMovies(category, type='movie') {
-  let response = await axios.get(`${BASE_URL}${type}/${endPoints[`${category}`]}?api_key=${apikey}&language=en-US`)
-  return response.data.results
+async function fetchMoviesTvShows(category, type = 'movie') {
+  let response = await axios.get(
+    `${BASE_URL}${type}/${endPoints[`${category}`]}?api_key=${apikey}&language=en-US`
+  );
+  return response.data;
 }
-async function fetchTrends() {
-  let response = await axios.get(`${BASE_URL}trending/person/week?api_key=${apikey}`)
-  return response.data
+async function fetchTrends(type) {
+  let response = await axios.get(`${BASE_URL}trending/${type}/week?api_key=${apikey}`);
+  return response.data;
 }
-export  function Main() {
-  const { data: popularData, isLoading: popularLoading, isError: popularError } = useQuery('popular', () => fetchMovies('popular'))
-  const { data: nowPlayingData, isLoading: nowPlayingLoading, isError: nowPlayingError } = useQuery('nowplaying', () => fetchMovies('nowplaying'))
-  const { data: comingSoonData, isLoading: comingSoonLoading, isError: comingSoonError } = useQuery('comingsoon', () => fetchMovies('comingsoon'))
-  const { data: topRatedData, isLoading: topRatedLoading, isError: topRatedError} = useQuery('toprated', () => fetchMovies('toprated'))
-  const { data: popularTvData, isLoading: popularTvLoading, isError: popularTvError} = useQuery('populartv', () => fetchMovies('popular', 'tv'))
-  const { data: nowPlayingTvData, isLoading: nowPlayingTvLoading, isError: nowPlayingTvError} = useQuery('ontheair', () => fetchMovies('ontheair', 'tv'))
-  const { data: comingSoonTvData, isLoading: comingSoonTvLoading, isError:  comingSoonTvError} = useQuery('airingtoday', () => fetchMovies('airingtoday', 'tv'))
-  const { data: topRatedTvData, isLoading: topRatedTvLoading, isError: topRatedTvError} = useQuery('topratedtv', () => fetchMovies('toprated', 'tv'))
-  const { data, isLoading, isError} = useQuery('trends', () => fetchTrends())
-  console.log(data)
-    return (
-      <Box as={'main'}>
-          <Tabs>
-            <TabList>
-              <Tab>Movies</Tab>
-              <Tab>Tv Shows</Tab>
-              <Tab>Trending</Tab>
-            </TabList>
+export function Main() {
+  const popularData = useQuery('popular', () => fetchMoviesTvShows('popular'));
+  const nowPlayingData = useQuery('nowplaying', () => fetchMoviesTvShows('nowplaying'));
+  const comingSoonData = useQuery('comingsoon', () => fetchMoviesTvShows('comingsoon'));
+  const topRatedData = useQuery('toprated', () => fetchMoviesTvShows('toprated'));
+  const popularTvData = useQuery('populartv', () => fetchMoviesTvShows('popular', 'tv'));
+  const nowPlayingTvData = useQuery('ontheair', () => fetchMoviesTvShows('ontheair', 'tv'));
+  const comingSoonTvData = useQuery('airingtoday', () => fetchMoviesTvShows('airingtoday', 'tv'));
+  const topRatedTvData = useQuery('topratedtv', () => fetchMoviesTvShows('toprated', 'tv'));
+  const movieTrendsdata = useQuery('movietrends', () => fetchTrends('movie'));
+  const tvTrendsData = useQuery('tvtrends', () => fetchTrends('tv'));
 
-            <TabPanels>
-              <TabPanel>
-                <CategorySection data={popularData}/>
-                <CategorySection data={nowPlayingData}/>
-                <CategorySection data={comingSoonData}/>
-                <CategorySection data={topRatedData}/>
-              </TabPanel>
-              <TabPanel>
-                <CategorySection data={popularTvData}/>
-                <CategorySection data={nowPlayingTvData}/>
-                <CategorySection data={comingSoonTvData}/>
-                <CategorySection data={topRatedTvData}/>
-              </TabPanel>
-              <TabPanel>
-                <Box as={'section'}>All</Box>
-                <Box as={'section'}>Movie</Box>
-                <Box as={'section'}>Tv shows</Box>
-              </TabPanel>
-            </TabPanels>
-        </Tabs>
-
-      </Box>
-    )
+  return (
+    <Box as={'main'}>
+      <Tabs>
+        <TabList>
+          <Tab>Movies</Tab>
+          <Tab>Trending</Tab>
+          <Tab>Tv Shows</Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>
+            <CategorySection data={popularData} />
+            <CategorySection data={nowPlayingData} />
+            <CategorySection data={comingSoonData} />
+            <CategorySection data={topRatedData} />
+          </TabPanel>
+          <TabPanel>
+            <CategorySection data={movieTrendsdata} />
+            <CategorySection data={tvTrendsData} />
+          </TabPanel>
+          <TabPanel>
+            <CategorySection data={popularTvData} />
+            <CategorySection data={nowPlayingTvData} />
+            <CategorySection data={comingSoonTvData} />
+            <CategorySection data={topRatedTvData} />
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
+    </Box>
+  );
 }
