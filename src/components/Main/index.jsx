@@ -45,26 +45,26 @@ export function Main() {
     <Box as={'main'}>
       <Tabs>
         <TabList>
-          <Tab>Movies</Tab>
           <Tab>Trending</Tab>
+          <Tab>Movies</Tab>
           <Tab>Tv Shows</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
-            <CategorySection data={popularData} />
-            <CategorySection data={nowPlayingData} />
-            <CategorySection data={comingSoonData} />
-            <CategorySection data={topRatedData} />
+            <CategorySection data={movieTrendsdata} section="Movies" />
+            <CategorySection data={tvTrendsData} section="Tv Shows" />
           </TabPanel>
           <TabPanel>
-            <CategorySection data={movieTrendsdata} />
-            <CategorySection data={tvTrendsData} />
+            <CategorySection data={popularData} section="Popular" />
+            <CategorySection data={nowPlayingData} section="Now Playing" />
+            <CategorySection data={comingSoonData} section="Coming Soon" />
+            <CategorySection data={topRatedData} section="Top rated" />
           </TabPanel>
           <TabPanel>
-            <CategorySection data={popularTvData} />
-            <CategorySection data={nowPlayingTvData} />
-            <CategorySection data={comingSoonTvData} />
-            <CategorySection data={topRatedTvData} />
+            <CategorySection data={popularTvData} section="Popular" />
+            <CategorySection data={nowPlayingTvData} section="Now Playing" />
+            <CategorySection data={comingSoonTvData} section="Coming Soon" />
+            <CategorySection data={topRatedTvData} section="Top rated" />
           </TabPanel>
         </TabPanels>
       </Tabs>
