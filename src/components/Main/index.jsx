@@ -13,22 +13,22 @@ const endPoints = {
   airingtoday: 'airing_today',
   ontheair: 'on_the_air'
 };
-async function fetchMovies(category, type = 'movie') {
-  let response = await axios.get(
-    `${BASE_URL}${type}/${endPoints[`${category}`]}?api_key=${apikey}&language=en-US`
-  );
-  return response.data.results;
-}
+
+
 async function fetchMoviesTvShows(category, type = 'movie') {
   let response = await axios.get(
     `${BASE_URL}${type}/${endPoints[`${category}`]}?api_key=${apikey}&language=en-US`
   );
   return response.data;
 }
+
 async function fetchTrends(type) {
   let response = await axios.get(`${BASE_URL}trending/${type}/week?api_key=${apikey}`);
   return response.data;
 }
+
+const tabs = ['Trending', 'Movies', 'Tv shows']
+
 export function Main() {
   const popularData = useQuery('popular', () => fetchMoviesTvShows('popular'));
   const nowPlayingData = useQuery('nowplaying', () => fetchMoviesTvShows('nowplaying'));
@@ -45,9 +45,7 @@ export function Main() {
     <Box as={'main'}>
       <Tabs >
         <TabList>
-          <Tab _selected={{ color: 'pink.500' }}>Trending</Tab>
-          <Tab _selected={{ color: 'pink.500' }}>Movies</Tab>
-          <Tab _selected={{ color: 'pink.500' }}>Tv Shows</Tab>
+          {tabs.map(tab => <Tab _selected={{ color: 'pink.500' }}>{tab}</Tab>)}
         </TabList>
         <TabPanels>
           <TabPanel>
