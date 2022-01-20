@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Box, IconButton } from '@chakra-ui/react'
+import { Box, IconButton, Skeleton, SkeletonText } from '@chakra-ui/react'
 import { ArrowLeftCircle, ArrowRightCircle } from 'react-feather';
 import { PosterCard } from './PosterCard'
 
@@ -38,34 +38,58 @@ const settings = {
 
 export function CategorySection({data,...props}) {
     const [slider, setSlider] = useState(null);
+    const { isLoading, isError, error, data:categoryData } = data ?? {};
+
+
     return (
         <Box as={'section'} position={'relative'}>
-            <IconButton
-                aria-label="left-arrow"
-                position="absolute"
-                left='-15px'
-                top='40%'
-                transform={'translate(0%, -50%)'}
-                zIndex={2}
-                onClick={() => slider?.slickPrev()}>
-                <ArrowLeftCircle />
-            </IconButton>
-            {/* Right Icon */}
-            <IconButton
-                aria-label="right-arrow"
-                position="absolute"
-                right='-15px'
-                top='40%'
-                transform={'translate(0%, -50%)'}
-                zIndex={2}
-                onClick={() => slider?.slickNext()}>
-                <ArrowRightCircle />
-            </IconButton>
+          {
+            isLoading ? 
             <Slider {...settings} ref={(slider) => setSlider(slider)}>
-              {
-                data && data.map((item,i)  => (<PosterCard  key={i} details={item} />))
-              }
-            </Slider>
+                {
+                  Array(10).fill().map((item,i)  => (
+                    <Box p="20px" key={i}>
+                      <Skeleton w="290px" h="420px">
+                      </Skeleton>
+                      <SkeletonText mt='4' noOfLines={2} spacing='4'></SkeletonText>
+                    </Box>
+                  ))
+                }
+            </Slider> :
+            (isError ? 
+              <Text>{error}</Text> :
+              <>
+                <IconButton
+                    aria-label="left-arrow"
+                    position="absolute"
+                    left='-15px'
+                    top='40%'
+                    transform={'translate(0%, -50%)'}
+                    zIndex={2}
+                    onClick={() => slider?.slickPrev()}>
+                    <ArrowLeftCircle />
+                </IconButton>
+                {/* Right Icon */}
+                <IconButton
+                    aria-label="right-arrow"
+                    position="absolute"
+                    right='-15px'
+                    top='40%'
+                    transform={'translate(0%, -50%)'}
+                    zIndex={2}
+                    onClick={() => slider?.slickNext()}>
+                    <ArrowRightCircle />
+                </IconButton>
+                <Slider {...settings} ref={(slider) => setSlider(slider)}>
+                  {
+                    categoryData?.results?.map((item,i)  => (
+                      <PosterCard  key={i} details={item} />
+                    ))
+                  }
+                </Slider>
+              </>
+            )
+          }
         </Box>
     )
 }
