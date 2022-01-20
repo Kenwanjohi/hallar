@@ -24,7 +24,7 @@ export function Navigation() {
     const backgroundMain = useColorModeValue('white', 'gray.800')
     
     return (
-        <Box position={'fixed'} top='0' left='0'  w='100%' zIndex='1' bg={backgroundMain}>
+        <Box position={'fixed'} top='0' left='0'  w='100%' zIndex='10' bg={backgroundMain}>
             <Flex  py='10px' px='20px' align={'center'} justify={'space-between'}  borderBottom={1} borderStyle={'solid'} borderColor={useColorModeValue('gray.200', 'gray.900')}>
                 <HStack spacing='40px'>
                     <Logo/>

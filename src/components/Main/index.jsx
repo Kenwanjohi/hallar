@@ -43,11 +43,11 @@ export function Main() {
 
   return (
     <Box as={'main'}>
-      <Tabs>
+      <Tabs >
         <TabList>
-          <Tab>Trending</Tab>
-          <Tab>Movies</Tab>
-          <Tab>Tv Shows</Tab>
+          <Tab _selected={{ color: 'pink.500' }}>Trending</Tab>
+          <Tab _selected={{ color: 'pink.500' }}>Movies</Tab>
+          <Tab _selected={{ color: 'pink.500' }}>Tv Shows</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
