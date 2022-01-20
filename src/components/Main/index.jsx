@@ -30,6 +30,8 @@ async function fetchTrends(type) {
 const tabs = ['Trending', 'Movies', 'Tv shows']
 
 export function Main() {
+  const movieTrendsdata = useQuery('movietrends', () => fetchTrends('movie'));
+  const tvTrendsData = useQuery('tvtrends', () => fetchTrends('tv'));
   const popularData = useQuery('popular', () => fetchMoviesTvShows('popular'));
   const nowPlayingData = useQuery('nowplaying', () => fetchMoviesTvShows('nowplaying'));
   const comingSoonData = useQuery('comingsoon', () => fetchMoviesTvShows('comingsoon'));
@@ -38,9 +40,7 @@ export function Main() {
   const nowPlayingTvData = useQuery('ontheair', () => fetchMoviesTvShows('ontheair', 'tv'));
   const comingSoonTvData = useQuery('airingtoday', () => fetchMoviesTvShows('airingtoday', 'tv'));
   const topRatedTvData = useQuery('topratedtv', () => fetchMoviesTvShows('toprated', 'tv'));
-  const movieTrendsdata = useQuery('movietrends', () => fetchTrends('movie'));
-  const tvTrendsData = useQuery('tvtrends', () => fetchTrends('tv'));
-
+ 
   return (
     <Box as={'main'}>
       <Tabs >
