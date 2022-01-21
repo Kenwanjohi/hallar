@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Box, Image, Stack, Text, Collapse } from '@chakra-ui/react';
+import { Link } from 'react-router-dom'
 
 export function PosterCard({ details, ...props }) {
   const [show, setShow] = useState(false);
@@ -12,8 +13,9 @@ export function PosterCard({ details, ...props }) {
     }
     return str.slice(0, num) + '...';
   }
-  const { poster_path, name, release_date, first_air_date, title, overview, vote_average } =
+  const { poster_path, name, release_date, first_air_date, title, overview, vote_average , id, media_type} =
     details ?? {};
+  const subRoute = `${first_air_date ? 'tv' : (media_type ? (media_type === 'tv' ? 'tv' : 'movie') : 'movie')}`
   return (
     <Stack spacing={4} mr="20px">
       <Box
@@ -40,6 +42,7 @@ export function PosterCard({ details, ...props }) {
           <Collapse startingHeight={0} in={show}>
             <Text>{truncateString(overview, 105)}</Text>
           </Collapse>
+          <Link to={`/${subRoute}/${id}`} >
           <Box>
             <svg width="40px" height="40px" viewBox="0 0 60 60" className="cu-button-detail">
               <circle
@@ -54,6 +57,7 @@ export function PosterCard({ details, ...props }) {
               </g>
             </svg>
           </Box>
+          </Link>
         </Stack>
       </Box>
       <Box>
