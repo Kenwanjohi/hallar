@@ -48,9 +48,7 @@ export function Details() {
 
   function getColors(colors) {
     setColor(colors);
-    console.log(color);
   }
-  console.log(color);
 
 
   return (
