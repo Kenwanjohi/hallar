@@ -58,18 +58,16 @@ export function Details() {
       ) : isError ? (
         <Text>error</Text>
       ) : (
-        <Box  bgGradient={`linear(135deg, ${color[0]}, 50%, ${color[1]})`}>
+        <Box  bgGradient="linear(135deg, rgb(45, 12, 63) 0%, rgb(148, 79, 110) 50%, rgb(239, 146, 118) 100%)">
           <HStack position='relative' h='max-content' align={{base: 'end', md: 'center'}}>
             <Box width={{ base: '100%', md: '500px'}} m={{md: '50px 0px 50px 50px'}} >
-              <ColorExtractor getColors={getColors}>
                 <img
                   src={`https://image.tmdb.org/t/p/w500${poster_path}`}
                   width="100%"
                   alt="Movie poster"
                 />
-              </ColorExtractor>
             </Box>
-            <Stack left={{base: '-.5rem', md: 'initial'}}  p='0 20px 10px 20px' h='100%' w='100%' bgGradient={{base: `linear(to-b, transparent, 20%, ${hexToRgb(color[0])})`, md: 'none'}} justifyContent={{base: 'end', md: 'initial'}} position={{base: 'absolute', md: 'initial'}} >
+            <Stack left={{base: '-.5rem', md: 'initial'}}  p='0 20px 10px 20px' h='100%' w='100%' bgGradient={{base: 'linear(to-b, transparent,40%, rgba(8, 8, 8, 0.5),60%, rgba(8, 8, 8))', md: 'none'}} justifyContent={{base: 'end', md: 'initial'}} position={{base: 'absolute', md: 'initial'}} >
               <Text>{tagline}</Text>
               <h4 style={{ fontSize: '20px' }}>{title}</h4>
               <Text>
