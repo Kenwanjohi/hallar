@@ -9,7 +9,8 @@ import { Routes, Route } from 'react-router-dom';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      refetchOnWindowFocus: false
+      refetchOnWindowFocus: false,
+      refetchOnMount: false
     }
   }
 });
