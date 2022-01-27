@@ -10,7 +10,7 @@ export function More() {
   const { pathname } = useLocation();
   const mediaType = pathname.slice(1, pathname.lastIndexOf('/'));
 
-  const { data, error, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status } =
+  const { data, error, fetchNextPage, hasNextPage, status } =
     useInfiniteQuery(
       section,
       ({ pageParam = 1 }) => {
@@ -49,7 +49,7 @@ export function More() {
             <React.Fragment key={i}>
               {group.results.map((item) => (
                 <GridItem key={item.id}>
-                  <PosterCard height="initial" width="initial" details={item} />
+                  <PosterCard margin="initial" height="initial" width="initial" details={item} />
                 </GridItem>
               ))}
             </React.Fragment>

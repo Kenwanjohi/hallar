@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Box, Image, Stack, Text, Collapse } from '@chakra-ui/react';
 import { Link } from 'react-router-dom'
 
-export function PosterCard({ details, height, width, ...props }) {
+export function PosterCard({ details, height, width, margin, ...props }) {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const hideShow = () => setShow(false);
@@ -17,7 +17,7 @@ export function PosterCard({ details, height, width, ...props }) {
     details ?? {};
   const subRoute = `${first_air_date ? 'tv' : (media_type ? (media_type === 'tv' ? 'tv' : 'movie') : 'movie')}`
   return (
-    <Stack spacing={4} mr="20px">
+    <Stack spacing={4}  mr={margin || "20px"}>
       <Box
         color="white"
         w={width || "290px"}
