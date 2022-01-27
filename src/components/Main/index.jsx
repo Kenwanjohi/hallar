@@ -22,7 +22,7 @@ export function Main() {
     <Box as={'main'}>
       <Tabs >
         <TabList>
-          {tabs.map(tab => <Tab _selected={{ color: 'pink.500' }}>{tab}</Tab>)}
+          {tabs.map((tab, i) => <Tab _selected={{ color: 'pink.500' }} key={i}>{tab}</Tab>)}
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -33,13 +33,13 @@ export function Main() {
             <CategorySection mediaType='movie' data={popularData} section="popular" />
             <CategorySection mediaType='movie' data={nowPlayingData} section="nowplaying" />
             <CategorySection mediaType='movie' data={comingSoonData} section="comingsoon" />
-            <CategorySection mediaType='movie' data={topRatedData} section="top rated" />
+            <CategorySection mediaType='movie' data={topRatedData} section="toprated" />
           </TabPanel>
           <TabPanel>
             <CategorySection mediaType='tv' data={popularTvData} section="popular" />
             <CategorySection mediaType='tv' data={nowPlayingTvData} section="ontheair" />
             <CategorySection mediaType='tv' data={comingSoonTvData} section="airingtoday" />
-            <CategorySection mediaType='tv' data={topRatedTvData} section="top rated" />
+            <CategorySection mediaType='tv' data={topRatedTvData} section="toprated" />
           </TabPanel>
         </TabPanels>
       </Tabs>
