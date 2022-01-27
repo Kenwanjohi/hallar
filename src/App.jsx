@@ -2,6 +2,7 @@ import { Box, Flex, Text } from '@chakra-ui/react';
 import { Main } from './components/Main';
 import { Navigation } from './components/Navigation';
 import { Details } from './components/Details'
+import { More } from './components/More'
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Routes, Route } from 'react-router-dom';
 
@@ -38,6 +39,7 @@ function App() {
             }
           />
           <Route path=":category/:id" element={<Details/>} />
+          <Route path=":category/:section" element={<More/>} />
         </Routes>
       </Box>
     </QueryClientProvider>
