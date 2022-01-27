@@ -38,7 +38,7 @@ function App() {
               </>
             }
           />
-          <Route path=":category/:id" element={<Details/>} />
+          <Route path="details/:category/:id" element={<Details/>} />
           <Route path="movie/:section" element={<More/>} />
           <Route path="tv/:section" element={<More/>} />
         </Routes>
