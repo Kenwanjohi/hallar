@@ -1,31 +1,8 @@
-import axios from 'axios';
 import { useQuery } from 'react-query';
 import { Box, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 import { CategorySection } from './CategorySection';
 
-const BASE_URL = 'https://api.themoviedb.org/3/';
-const apikey = import.meta.env.VITE_API_KEY;
-const endPoints = {
-  popular: 'popular',
-  nowplaying: 'now_playing',
-  comingsoon: 'upcoming',
-  toprated: 'top_rated',
-  airingtoday: 'airing_today',
-  ontheair: 'on_the_air'
-};
-
-
-async function fetchMoviesTvShows(category, type = 'movie') {
-  let response = await axios.get(
-    `${BASE_URL}${type}/${endPoints[`${category}`]}?api_key=${apikey}&language=en-US`
-  );
-  return response.data;
-}
-
-async function fetchTrends(type) {
-  let response = await axios.get(`${BASE_URL}trending/${type}/week?api_key=${apikey}`);
-  return response.data;
-}
+import { fetchMoviesTvShows, fetchTrends } from '../../api'
 
 const tabs = ['Trending', 'Movies', 'Tv shows']
 
