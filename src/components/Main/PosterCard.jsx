@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Box, Image, Stack, Text, Collapse } from '@chakra-ui/react';
 import { Link } from 'react-router-dom'
 
-export function PosterCard({ details, ...props }) {
+export function PosterCard({ details, height, width, ...props }) {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const hideShow = () => setShow(false);
@@ -20,8 +20,8 @@ export function PosterCard({ details, ...props }) {
     <Stack spacing={4} mr="20px">
       <Box
         color="white"
-        w="290px"
-        h="420px"
+        w={width || "290px"}
+        h={height || "420px"}
         position={'relative'}
         onMouseOver={handleShow}
         onMouseLeave={hideShow}>
@@ -42,7 +42,7 @@ export function PosterCard({ details, ...props }) {
           <Collapse startingHeight={0} in={show}>
             <Text>{truncateString(overview, 105)}</Text>
           </Collapse>
-          <Link to={`/${subRoute}/${id}`} >
+          <Link to={`/details/${subRoute}/${id}`} >
           <Box>
             <svg width="40px" height="40px" viewBox="0 0 60 60" className="cu-button-detail">
               <circle
