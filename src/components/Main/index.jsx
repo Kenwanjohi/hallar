@@ -26,20 +26,20 @@ export function Main() {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <CategorySection data={movieTrendsdata} section="Movies" />
-            <CategorySection data={tvTrendsData} section="Tv Shows" />
+            <CategorySection mediaType='movie' data={movieTrendsdata} section="movieTrends" />
+            <CategorySection mediaType='tv' data={tvTrendsData} section="tvTrends" />
           </TabPanel>
           <TabPanel>
-            <CategorySection data={popularData} section="Popular" />
-            <CategorySection data={nowPlayingData} section="Now Playing" />
-            <CategorySection data={comingSoonData} section="Coming Soon" />
-            <CategorySection data={topRatedData} section="Top rated" />
+            <CategorySection mediaType='movie' data={popularData} section="popular" />
+            <CategorySection mediaType='movie' data={nowPlayingData} section="nowplaying" />
+            <CategorySection mediaType='movie' data={comingSoonData} section="comingsoon" />
+            <CategorySection mediaType='movie' data={topRatedData} section="top rated" />
           </TabPanel>
           <TabPanel>
-            <CategorySection data={popularTvData} section="Popular" />
-            <CategorySection data={nowPlayingTvData} section="Now Playing" />
-            <CategorySection data={comingSoonTvData} section="Coming Soon" />
-            <CategorySection data={topRatedTvData} section="Top rated" />
+            <CategorySection mediaType='tv' data={popularTvData} section="popular" />
+            <CategorySection mediaType='tv' data={nowPlayingTvData} section="ontheair" />
+            <CategorySection mediaType='tv' data={comingSoonTvData} section="airingtoday" />
+            <CategorySection mediaType='tv' data={topRatedTvData} section="top rated" />
           </TabPanel>
         </TabPanels>
       </Tabs>

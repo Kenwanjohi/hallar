@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Box, Flex, Switch, Text } from '@chakra-ui/react';
 import { Main } from './components/Main';
 import { Navigation } from './components/Navigation';
 import { Details } from './components/Details'
@@ -39,7 +39,8 @@ function App() {
             }
           />
           <Route path=":category/:id" element={<Details/>} />
-          <Route path=":category/:section" element={<More/>} />
+          <Route path="movie/:section" element={<More/>} />
+          <Route path="tv/:section" element={<More/>} />
         </Routes>
       </Box>
     </QueryClientProvider>

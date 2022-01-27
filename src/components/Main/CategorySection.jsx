@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom'
 import { Box, Flex, IconButton, Skeleton, SkeletonText, Text } from '@chakra-ui/react';
 import { ArrowLeftCircle, ArrowRightCircle } from 'react-feather';
 import { PosterCard } from './PosterCard';
@@ -35,14 +36,25 @@ const settings = {
   ]
 };
 
-export function CategorySection({ data, section, ...props }) {
+const sectionMap = {
+  movieTrends: "Movies",
+  tvTrends: "Tv Shows",
+  popular: "Popular",
+  comingsoon: "Coming Soon",
+  toprated: "Top Rated",
+  nowplaying: "Now Playing",
+  airingtoday: 'Coming Soon',
+  ontheair: 'Now Playing'
+}
+export function CategorySection({ data, section, mediaType, ...props }) {
   const [slider, setSlider] = useState(null);
   const { isLoading, isError, error, data: categoryData } = data ?? {};
+
   return (
     <Box as={'section'} position={'relative'} mb="80px">
       <Flex justify={'space-between'} align={'center'} mb="20px">
-        <h4 style={{ fontSize: '25px' }}>{section}</h4>
-        <Text>See more</Text>
+        <h4 style={{ fontSize: '25px' }}>{sectionMap[section]}</h4>
+        <Link to={`/${mediaType}/${section}`} >See more</Link>
       </Flex>
       {isLoading ? (
         <Slider {...settings} ref={(slider) => setSlider(slider)}>

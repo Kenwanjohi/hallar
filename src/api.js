@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const apikey = import.meta.env.VITE_API_KEY;
-const endPoints = {
+export const endPoints = {
   popular: 'popular',
   nowplaying: 'now_playing',
   comingsoon: 'upcoming',
@@ -11,10 +11,9 @@ const endPoints = {
   ontheair: 'on_the_air'
 };
 
-
-async function fetchMoviesTvShows(category, type = 'movie') {
+async function fetchMoviesTvShows(category, type , pageParam) {
   let response = await axios.get(
-    `${BASE_URL}${type}/${endPoints[`${category}`]}?api_key=${apikey}&language=en-US`
+    `${BASE_URL}${type}/${endPoints[`${category}`]}?api_key=${apikey}&language=en-US&page=${pageParam}`
   );
   return response.data;
 }
