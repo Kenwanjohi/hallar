@@ -67,7 +67,7 @@ export function Details() {
                   alt="Movie poster"
                 />
             </Box>
-            <Stack left={{base: '-.5rem', md: 'initial'}}  p='0 20px 10px 20px' h='100%' w='100%' bgGradient={{base: 'linear(to-b, transparent,40%, rgba(8, 8, 8, 0.5),60%, rgba(8, 8, 8))', md: 'none'}} justifyContent={{base: 'end', md: 'initial'}} position={{base: 'absolute', md: 'initial'}} >
+            <Stack color={'white'} left={{base: '-.5rem', md: 'initial'}}  p='0 20px 10px 20px' h='100%' w='100%' bgGradient={{base: 'linear(to-b, transparent,40%, rgba(8, 8, 8, 0.5),60%, rgba(8, 8, 8))', md: 'none'}} justifyContent={{base: 'end', md: 'initial'}} position={{base: 'absolute', md: 'initial'}} >
               <Text>{tagline}</Text>
               <h4 style={{ fontSize: '20px' }}>{title}</h4>
               <Text>
