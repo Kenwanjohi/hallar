@@ -44,12 +44,12 @@ export function More() {
             <b>Yay! You have seen it all</b>
           </p>
         }>
-        <Grid templateColumns="repeat(auto-fit, minmax(250px, 1fr))" gap={6}>
+        <Grid templateColumns={{base: "repeat(auto-fit, minmax(150px, 1fr))", md: "repeat(auto-fit, minmax(250px, 1fr))"}} gap={6}>
           {(data?.pages ?? []).map((group, i) => (
             <React.Fragment key={i}>
               {group.results.map((item) => (
                 <GridItem key={item.id}>
-                  <PosterCard margin="initial" height="initial" width="initial" details={item} />
+                  <PosterCard margin="initial" rendered="grid" height="initial" width="initial" details={item} />
                 </GridItem>
               ))}
             </React.Fragment>

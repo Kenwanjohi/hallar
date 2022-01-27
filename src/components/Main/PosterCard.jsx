@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Box, Image, Stack, Text, Collapse } from '@chakra-ui/react';
 import { Link } from 'react-router-dom'
 
-export function PosterCard({ details, height, width, margin, ...props }) {
+export function PosterCard({ details, height, width, margin, rendered, ...props }) {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const hideShow = () => setShow(false);
@@ -39,8 +39,9 @@ export function PosterCard({ details, height, width, margin, ...props }) {
           <Text>
             {vote_average} Tmdb • ({(release_date || first_air_date).substring(0, 4)})
           </Text>
+
           <Collapse startingHeight={0} in={show}>
-            <Text>{truncateString(overview, 105)}</Text>
+            <Text  display={{base: rendered ? 'none' : 'block', md: 'block'}}>{truncateString(overview, 105)}</Text>
           </Collapse>
           <Link to={`/details/${subRoute}/${id}`} >
           <Box>
