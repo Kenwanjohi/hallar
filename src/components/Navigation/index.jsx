@@ -6,17 +6,61 @@ import { MobileNav } from './MobileNav'
 import { RegisterButtons } from './RegisterButtons'
 const navItems = [
   {
+    label: 'TRENDING',
+    links: [
+      {
+        link: 'Movies',
+        href: '#'
+      },
+      {
+        link: 'Tv Shows',
+        href: '#'
+      },
+    ]
+  },
+  {
     label: 'TV SHOWS',
-    href: '#',
+    links: [
+      {
+        link: 'Top Rated',
+        href: '#'
+      },
+      {
+        link: 'Popular',
+        href: '#'
+      },
+      {
+        link: 'Now Playing',
+        href: '#'
+      },
+      {
+        link: 'Coming Soon',
+        href: '#'
+      },
+    ]
   },
   {
     label: 'MOVIES',
-    href: '#',
+    links: [
+      {
+        link: 'Top Rated',
+        href: '#'
+      },
+      {
+        link: 'Popular',
+        href: '#'
+      },
+      {
+        link: 'Now Playing',
+        href: '#'
+      },
+      {
+        link: 'Coming Soon',
+        href: '#'
+      },
+    ]
   },
-  {
-    label: 'TRENDING',
-    href: '#',
-  }
+ 
 ];
 export function Navigation() {
     const { isOpen: isMobileNavOpen, onToggle } = useDisclosure()
