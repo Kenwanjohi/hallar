@@ -1,9 +1,9 @@
-import { Box, Flex, HStack, Image, Stack, Text } from '@chakra-ui/react';
+import { Box, HStack, Stack, Text } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import { ColorExtractor } from 'react-color-extractor';
 import { useQuery } from 'react-query';
 import axios from 'axios';
-import { useState } from 'react';
+import ColorThief from 'colorthief';
+import { useState, useRef } from 'react';
 
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const apikey = import.meta.env.VITE_API_KEY;
@@ -24,63 +24,123 @@ function formatTime(num) {
   return time;
 }
 
-
-function hexToRgb(hex) {
-  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result ? `rgba(${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)})` : null;
+function mapToRgb(arr) {
+  return [`rgba(${arr.join(',')},1)`, `rgba(${arr.join(',')},0.6)`];
 }
 
 async function fetchMoviesTvShowsDetails(type, id) {
   let response = await axios.get(`${BASE_URL}${type}/${id}?api_key=${apikey}&language=en-US`);
   return response.data;
 }
-export function Details() {
-  const [color, setColor] = useState([]);
-  const { category, id } = useParams();
-  const { data, isLoading, isError, error } = useQuery('details', () =>
-    fetchMoviesTvShowsDetails(category, id),
-    {
-    refetchOnMount: true
-}
-  );
-  const { title, overview, poster_path,first_air_date, release_date, runtime, tagline, vote_average, genres } =
-    data ?? {};
 
-  function getColors(colors) {
-    setColor(colors);
+async function fetchImages(id) {
+  let response = await axios.get(`${BASE_URL}/movie//${id}/images?api_key=${apikey}`);
+  return response.data;
+}
+
+export function Details() {
+  const [color, setColor] = useState(null);
+  const imageEl = useRef(null);
+  const container = useRef(null);
+  const { category, id } = useParams();
+
+  const { data, isLoading, isError, error } = useQuery(
+    'details',
+    () => fetchMoviesTvShowsDetails(category, id),
+    {
+      refetchOnMount: true
+    }
+  );
+
+  const {
+    data: imagesData,
+    isLoading: imageIsLoading,
+    isError: imageIsError,
+    error: imageError
+  } = useQuery('images', () => fetchImages(id), {
+    refetchOnMount: true
+  });
+
+  const {
+    title,
+    overview,
+    poster_path,
+    first_air_date,
+    release_date,
+    runtime,
+    tagline,
+    vote_average,
+    genres
+  } = data ?? {};
+
+  function handleImageOnload() {
+    const colorThief = new ColorThief();
+    const res = colorThief.getColor(imageEl.current);
+    const brightness = Math.round(
+      (parseInt(res[0]) * 299 + parseInt(res[1]) * 587 + parseInt(res[2]) * 114) / 1000
+    );
+    console.log(brightness);
+    const textColour = brightness > 125 ? '#1a202c' : 'white';
+    container.current.style.color = textColour;
+    const dorminantColor = mapToRgb(res);
+    setColor(dorminantColor);
   }
 
-
   return (
-    <Box pt='60px'>
+    <Box pt="60px">
       {isLoading ? (
         <Text>...Loading</Text>
       ) : isError ? (
         <Text>error</Text>
       ) : (
-        <Box  bgGradient="linear(135deg, rgb(45, 12, 63) 0%, rgb(148, 79, 110) 50%, rgb(239, 146, 118) 100%)">
-          <HStack position='relative' h='max-content' align={{base: 'end', md: 'center'}}>
-            <Box width={{ base: '100%', md: '500px'}} m={{md: '50px 0px 50px 50px'}} >
+        <Box
+          ref={container}
+          backgroundRepeat="no-repeat"
+          backgroundSize="cover"
+          backgroundPosition="right -200px top"
+          backgroundImage={`https://image.tmdb.org/t/p/w1280${imagesData?.backdrops[0]?.file_path}`}>
+          <Box
+            bgGradient={
+              color?.length ? `linear(to right, ${color[0]} 150px, ${color[1]} 100%)` : null
+            }>
+            <HStack position="relative" h="max-content" align={{ base: 'end', md: 'center' }}>
+              <Box width={{ base: '100%', md: '500px' }} m={{ md: '50px 0px 50px 50px' }}>
                 <img
                   src={`https://image.tmdb.org/t/p/w780${poster_path}`}
                   width="100%"
                   alt="Movie poster"
+                  ref={imageEl}
+                  crossOrigin="anonymous"
+                  onLoad={handleImageOnload}
                 />
-            </Box>
-            <Stack color={'white'} left={{base: '-.5rem', md: 'initial'}}  p='0 20px 10px 20px' h='100%' w='100%' bgGradient={{base: 'linear(to-b, transparent,40%, rgba(8, 8, 8, 0.5),60%, rgba(8, 8, 8))', md: 'none'}} justifyContent={{base: 'end', md: 'initial'}} position={{base: 'absolute', md: 'initial'}} >
-              <Text>{tagline}</Text>
-              <h4 style={{ fontSize: '20px' }}>{title}</h4>
-              <Text>
-                {genres &&
-                  `${genres.map((el) => el.name).join('•')}•${(
-                    release_date || first_air_date
-                  ).substring(0, 4)}`}
-              </Text>
-              <Text>{formatTime(runtime)}</Text>
-              <Text width={{ lg: '80%' }}>{overview}</Text>
-              <Text>{vote_average} Tmdb</Text>
-            </Stack>
-          </HStack>
+              </Box>
+              <Stack
+                left={{ base: '-.5rem', md: 'initial' }}
+                p="0 20px 10px 20px"
+                h="100%"
+                w="100%"
+                bgGradient={{
+                  base: color?.length
+                    ? `linear(to bottom, transparent , ${color[1]} 50%, ${color[0]} 100%)`
+                    : null,
+                  md: 'none'
+                }}
+                justifyContent={{ base: 'end', md: 'initial' }}
+                position={{ base: 'absolute', md: 'initial' }}>
+                <Text>{tagline}</Text>
+                <h4 style={{ fontSize: '2rem' }}>{title}</h4>
+                <Text>
+                  {genres &&
+                    `${genres.map((el) => el.name).join('•')}•${(
+                      release_date || first_air_date
+                    ).substring(0, 4)}`}
+                </Text>
+                <Text>{formatTime(runtime)}</Text>
+                <Text width={{ lg: '80%' }}>{overview}</Text>
+                <Text>{vote_average} Tmdb</Text>
+              </Stack>
+            </HStack>
+          </Box>
         </Box>
       )}
     </Box>
