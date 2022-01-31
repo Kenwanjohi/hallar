@@ -62,7 +62,7 @@ export function Details() {
           <HStack position='relative' h='max-content' align={{base: 'end', md: 'center'}}>
             <Box width={{ base: '100%', md: '500px'}} m={{md: '50px 0px 50px 50px'}} >
                 <img
-                  src={`https://image.tmdb.org/t/p/original${poster_path}`}
+                  src={`https://image.tmdb.org/t/p/w780${poster_path}`}
                   width="100%"
                   alt="Movie poster"
                 />
