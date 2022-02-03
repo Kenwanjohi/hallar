@@ -10,11 +10,11 @@ const navItems = [
     links: [
       {
         link: 'Movies',
-        href: '#'
+        href: '/movie/movieTrends'
       },
       {
         link: 'Tv Shows',
-        href: '#'
+        href: '/tv/tvTrends'
       },
     ]
   },
@@ -23,19 +23,19 @@ const navItems = [
     links: [
       {
         link: 'Top Rated',
-        href: '#'
+        href: '/tv/toprated'
       },
       {
         link: 'Popular',
-        href: '#'
+        href: '/tv/popular'
       },
       {
         link: 'Now Playing',
-        href: '#'
+        href: '/tv/ontheair'
       },
       {
         link: 'Coming Soon',
-        href: '#'
+        href: '/tv/airingtoday'
       },
     ]
   },
@@ -44,19 +44,19 @@ const navItems = [
     links: [
       {
         link: 'Top Rated',
-        href: '#'
+        href: '/movie/toprated'
       },
       {
         link: 'Popular',
-        href: '#'
+        href: '/movie/popular'
       },
       {
         link: 'Now Playing',
-        href: '#'
+        href: '/movie/nowplaying'
       },
       {
         link: 'Coming Soon',
-        href: '#'
+        href: '/movie/comingsoon'
       },
     ]
   },

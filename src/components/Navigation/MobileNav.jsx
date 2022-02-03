@@ -1,5 +1,7 @@
-import { VStack, Link, Stack, Flex, useColorModeValue, Icon, Collapse, Text, useDisclosure } from '@chakra-ui/react';
+import { VStack, Link as ChakraLink, Stack, Flex, useColorModeValue, Icon, Collapse, Text, useDisclosure } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons'
+import { Link } from 'react-router-dom';
+
 import { RegisterButtons } from './RegisterButtons';
 export function MobileNav({ navItems }) {
   return (
@@ -43,8 +45,10 @@ const MobileNavItem = ({ label, links }) => {
           borderColor={useColorModeValue('gray.200', 'gray.700')}
           align={'start'}>
           {links.map((link, i) => (
-            <Link key={i} py={2} href={link.href}>
+            <Link to={link.href}>
+            <ChakraLink key={i} py={2} >
               {link.link}
+            </ChakraLink>
             </Link>
           ))}
         </Stack>
