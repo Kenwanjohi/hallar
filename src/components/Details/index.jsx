@@ -1,12 +1,9 @@
 import { Box, HStack, Stack, Text } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import axios from 'axios';
+import { fetchMoviesTvShowsDetails, fetchImages } from '../../api';
 import ColorThief from 'colorthief';
 import { useState, useRef } from 'react';
-
-const BASE_URL = 'https://api.themoviedb.org/3/';
-const apikey = import.meta.env.VITE_API_KEY;
 
 function formatTime(num) {
   let time;
@@ -28,16 +25,6 @@ function mapToRgb(arr) {
   return [`rgba(${arr.join(',')},1)`, `rgba(${arr.join(',')},0.6)`];
 }
 
-async function fetchMoviesTvShowsDetails(type, id) {
-  let response = await axios.get(`${BASE_URL}${type}/${id}?api_key=${apikey}&language=en-US`);
-  return response.data;
-}
-
-async function fetchImages(id) {
-  let response = await axios.get(`${BASE_URL}/movie//${id}/images?api_key=${apikey}`);
-  return response.data;
-}
-
 export function Details() {
   const [color, setColor] = useState(null);
   const imageEl = useRef(null);
@@ -57,7 +44,7 @@ export function Details() {
     isLoading: imageIsLoading,
     isError: imageIsError,
     error: imageError
-  } = useQuery('images', () => fetchImages(id), {
+  } = useQuery('images', () => fetchImages(category, id), {
     refetchOnMount: true
   });
 
@@ -76,11 +63,13 @@ export function Details() {
   function handleImageOnload() {
     const colorThief = new ColorThief();
     const res = colorThief.getColor(imageEl.current);
+    // https://www.w3.org/TR/AERT/#color-contrast
+    // Calculating the Perceived Brightness of a Color
     const brightness = Math.round(
       (parseInt(res[0]) * 299 + parseInt(res[1]) * 587 + parseInt(res[2]) * 114) / 1000
     );
-    console.log(brightness);
     const textColour = brightness > 125 ? '#1a202c' : 'white';
+
     container.current.style.color = textColour;
     const dorminantColor = mapToRgb(res);
     setColor(dorminantColor);

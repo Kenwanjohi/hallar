@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Box, Image, Stack, Text, Collapse } from '@chakra-ui/react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 export function PosterCard({ details, height, width, margin, rendered, ...props }) {
   const [show, setShow] = useState(false);
@@ -13,15 +13,26 @@ export function PosterCard({ details, height, width, margin, rendered, ...props 
     }
     return str.slice(0, num) + '...';
   }
-  const { poster_path, name, release_date, first_air_date, title, overview, vote_average , id, media_type} =
-    details ?? {};
-  const subRoute = `${first_air_date ? 'tv' : (media_type ? (media_type === 'tv' ? 'tv' : 'movie') : 'movie')}`
+  const {
+    poster_path,
+    name,
+    release_date,
+    first_air_date,
+    title,
+    overview,
+    vote_average,
+    id,
+    media_type
+  } = details ?? {};
+  const subRoute = `${
+    first_air_date ? 'tv' : media_type ? (media_type === 'tv' ? 'tv' : 'movie') : 'movie'
+  }`;
   return (
-    <Stack spacing={4}  mr={margin || "20px"}>
+    <Stack spacing={4} mr={margin || '20px'}>
       <Box
         color="white"
-        w={width || "290px"}
-        h={height || "420px"}
+        w={width || '290px'}
+        h={height || '420px'}
         position={'relative'}
         onMouseOver={handleShow}
         onMouseLeave={hideShow}>
@@ -41,23 +52,25 @@ export function PosterCard({ details, height, width, margin, rendered, ...props 
           </Text>
 
           <Collapse startingHeight={0} in={show}>
-            <Text  display={{base: rendered ? 'none' : 'block', md: 'block'}}>{truncateString(overview, 105)}</Text>
+            <Text display={{ base: rendered ? 'none' : 'block', md: 'block' }}>
+              {truncateString(overview, 105)}
+            </Text>
           </Collapse>
-          <Link to={`/details/${subRoute}/${id}`} >
-          <Box>
-            <svg width="40px" height="40px" viewBox="0 0 60 60" className="cu-button-detail">
-              <circle
-                fillOpacity="0.2"
-                cx="30"
-                cy="30"
-                r="29"
-                stroke="#FFFFFF"
-                strokeWidth="1.5"></circle>
-              <g transform="translate(16.071429, 17.142857)" fillRule="nonzero" fill="#FFFFFF">
-                <path d="M21.9263541,11.4642855 L0,11.4642855 L0,13.6071427 L21.9420593,13.6071427 L13.0824461,22.1982827 L14.5976749,23.6675955 L26.069575,12.5433287 L14.5976749,1.41906191 L13.0824461,2.8883747 L21.9263541,11.4642855 Z"></path>
-              </g>
-            </svg>
-          </Box>
+          <Link to={`/details/${subRoute}/${id}`}>
+            <Box>
+              <svg width="40px" height="40px" viewBox="0 0 60 60" className="cu-button-detail">
+                <circle
+                  fillOpacity="0.2"
+                  cx="30"
+                  cy="30"
+                  r="29"
+                  stroke="#FFFFFF"
+                  strokeWidth="1.5"></circle>
+                <g transform="translate(16.071429, 17.142857)" fillRule="nonzero" fill="#FFFFFF">
+                  <path d="M21.9263541,11.4642855 L0,11.4642855 L0,13.6071427 L21.9420593,13.6071427 L13.0824461,22.1982827 L14.5976749,23.6675955 L26.069575,12.5433287 L14.5976749,1.41906191 L13.0824461,2.8883747 L21.9263541,11.4642855 Z"></path>
+                </g>
+              </svg>
+            </Box>
           </Link>
         </Stack>
       </Box>

@@ -27,4 +27,14 @@ async function fetchTrends(type, pageParam = 1) {
   return response.data;
 }
 
-export { fetchMoviesTvShows, fetchTrends };
+async function fetchMoviesTvShowsDetails(type, id) {
+  let response = await axios.get(`${BASE_URL}${type}/${id}?api_key=${apikey}&language=en-US`);
+  return response.data;
+}
+
+async function fetchImages(category,id) {
+  let response = await axios.get(`${BASE_URL}/${category}/${id}/images?api_key=${apikey}`);
+  return response.data;
+}
+
+export { fetchMoviesTvShows, fetchTrends, fetchMoviesTvShowsDetails, fetchImages };
