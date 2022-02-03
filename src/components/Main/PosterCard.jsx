@@ -36,7 +36,7 @@ export function PosterCard({ details, height, width, margin, rendered, ...props 
         position={'relative'}
         onMouseOver={handleShow}
         onMouseLeave={hideShow}>
-        <Image src={`https://image.tmdb.org/t/p/w500${poster_path}`} alt="Movie poster" h="100%" />
+        <Image src={`https://image.tmdb.org/t/p/w500${poster_path}`} alt="Movie poster" h="100%" w='100%' />
         <Stack
           p={2}
           position={'absolute'}
